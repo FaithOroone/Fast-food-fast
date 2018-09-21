@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/FaithOroone/Fast-food-fast.svg?branch=develop)](https://travis-ci.org/FaithOroone/Fast-food-fast)
+[![Build Status](https://travis-ci.org/FaithOroone/Fast-food-fast.svg?branch=develop)](https://travis-ci.org/FaithOroone/Fast-food-fast) [![Coverage Status](https://coveralls.io/repos/github/FaithOroone/Fast-food-fast/badge.svg?branch=add_an_order)](https://coveralls.io/github/FaithOroone/Fast-food-fast?branch=add_an_order)
+
 # Fast-food-fast-API
 
 ## Description
