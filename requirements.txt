@@ -24,6 +24,7 @@ py==1.6.0
 pycparser==2.19
 pyOpenSSL==18.0.0
 pytest==3.8.0
+pytest-cov==2.6.0
 requests==2.19.1
 scandir==1.9.0
 six==1.11.0
