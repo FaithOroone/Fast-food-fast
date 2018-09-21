@@ -7,12 +7,12 @@ lst = OrderList()
 
 #add an order endpoint
 app = Flask(__name__)
-@app.route('/api/v1/orders', methods=['POST'])
-def add_an_order():
-    if request.get_json():
-        new_order_data = request.get_json()
-        lst.orderlist.append(new_order_data)
-        return jsonify({'new_order':new_order_data}), 200
+# @app.route('/api/v1/orders', methods=['POST'])
+# def add_an_order():
+#     if request.get_json():
+#         new_order_data = request.get_json()
+#         lst.orderlist.append(new_order_data)
+#         return jsonify({'new_order':new_order_data}), 200
 
 #get all orders endpoint.
 @app.route('/api/v1/orders', methods=['GET'])
