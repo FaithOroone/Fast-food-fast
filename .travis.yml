@@ -5,5 +5,9 @@ install:
   - pip install -r requirements.txt
 script:
   - pytest --cov=.
+  - coverage
+  - coveralls
+after_success:
+  - coveralls
 
 
