@@ -24,3 +24,9 @@ class OrderList():
         order = Order(orderId, location, contact, quantity, payment_mode, status).create_order()
         self.orderlist.append(order)
         return order
+
+
+    def get_an_order(self, orderId):
+        for order in self.orderlist:
+            if order['orderId']==orderId:
+                return order
