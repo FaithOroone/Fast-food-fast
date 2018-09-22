@@ -26,5 +26,13 @@ def get_an_order(orderId):
         if order['orderId']==orderId:
             return jsonify({'order':order}), 200
 
+#update an order.
+@app.route('/api/v1/orders/<int:orderId>', methods=['PUT'])
+def update_an_order(orderId):
+    if request.get_json():
+        new_order_data = request.get_json()
+
+        return jsonify({'updated':lst.update_an_order(orderId, new_order_data['status'])})
+
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
