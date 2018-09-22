@@ -30,3 +30,8 @@ class Testing(TestCase):
         response = self.app.get('/api/v1/orders/1',
                                 data=json.dumps(self.order_data), content_type='application/json')
         self.assertEquals(response.status_code, 200)
+
+    def test_update_an_order(self):
+        response = self.app.put(
+            '/api/v1/orders/2', data=json.dumps(self.order_data), content_type='application/json')
+        self.assertEquals(response.status_code, 200)
