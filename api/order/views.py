@@ -19,5 +19,12 @@ def add_an_order():
 def get_all_orders():
     return jsonify({'orders':lst.get_orders()}),200
 
+#get a signal order endpoint
+@app.route('/api/v1/orders/<int:orderId>', methods=['GET'])
+def get_an_order(orderId):
+    for order in lst.get_orders():
+        if order['orderId']==orderId:
+            return jsonify({'order':order}), 200
+
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
