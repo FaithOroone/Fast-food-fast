@@ -1,7 +1,6 @@
+from app.views import app
 from unittest import TestCase
 import json
-from views import app
-
 
 class Testing(TestCase):
 
@@ -36,5 +35,5 @@ class Testing(TestCase):
             '/api/v1/orders/2', data=json.dumps(self.order_data), content_type='application/json')
         self.assertEquals(response.status_code, 200)
 
-    
+
 
