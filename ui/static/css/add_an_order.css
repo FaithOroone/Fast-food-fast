@@ -1,0 +1,17 @@
+.order{
+    width: 320px;
+    height:350px;
+    margin-left: 40%;
+    margin-right: 50%;
+    padding: 70px 30px;
+    border: 1px solid black;
+    color:#000;
+    background:paleturquoise;
+}
+.orderp{
+    text-align: center;
+    font-size: 22px;
+    font-family: sans-serif;
+    padding: 10px;
+    color: #fff;
+}
