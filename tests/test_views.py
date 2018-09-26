@@ -15,6 +15,11 @@ class Testing(TestCase):
             "status": "stat"
         }
 
+    def test_index_response(self):
+        response = self.app.get('/')
+        self.assertTrue(response, 'Welcome to Fast-food-fast')
+
+
     def test_get_orders(self):
         response = self.app.get(
             '/api/v1/orders', data=json.dumps(self.order_data), content_type='application/json')

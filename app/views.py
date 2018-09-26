@@ -8,6 +8,10 @@ lst = OrderList()
 # add an order endpoint
 app = Flask(__name__)
 
+@app.route('/api/v1/')
+def index():
+    return "Welcome to Fast-food-fast"
+
 
 @app.route('/api/v1/orders', methods=['POST'])
 def add_an_order():
