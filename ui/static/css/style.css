@@ -40,7 +40,7 @@ body{
 	padding: 5px 15px 4px 15px;
 }
 .menu li a{
-	color:black;
+	color:blue;
 	text-decoration: none;
 	line-height: 3em;
 }
@@ -52,19 +52,6 @@ body{
 }
 .menu li.selected a{
 	color:#fff;
-}
-
-.loginform {
-    width: 320px;
-    height: 420px;
-    background:paleturquoise;
-    color:#000;
-    top:50%;
-    left:50%;
-    position: absolute;
-    transform: translate(-50%,-50%);
-    box-sizing:border-box;
-    padding: 70px 30px;
 }
 .userpic{
     width: 100px;
@@ -79,6 +66,7 @@ h1{
     padding: 0 0 20px;
     text-align: center;
     font-size: 22px;
+    color: black;
 }
 p{
     margin: 0;
@@ -89,7 +77,7 @@ input{
     width: 100%;
     margin-bottom: 20px;
 }
-input[type="text"], input[type="password"], input[type="email"],input[type="number"]{
+input[type="text"], input[type="password"], input[type="email"],input[type="number"], input[type="tel"]{
     border: none;
     border-bottom: 1px solid #fff;
     background: transparent;
@@ -112,36 +100,6 @@ input[type="submit"]:hover{
     background: #ffc107;
     color: #000;
 }
-.loginform a{
-    text-decoration: none;
-    font-size: 12px;
-    line-height: 20px;
-    color:#000;
-}
-.loginform a:hover{
-    color:#ffc107;
-}
-.signupform{
-    width: 320px;
-    height: 600px;
-    background: paleturquoise;
-    color:000;
-    top:50%;
-    left:50%;
-    position: absolute;
-    transform: translate(-50%,-50%);
-    box-sizing:border-box;
-    padding: 70px 30px;
-}
-.signupform a{
-    text-decoration: none;
-    font-size: 12px;
-    line-height: 20px;
-    color:#000;
-}
-.signupform a:hover{
-    color:#ffc107;
-}
 .bf{
     background: url(../images/breakfast.jpg)
 }
@@ -149,30 +107,9 @@ footer{
     background-color: #F15A29;
     text-align: center;
   }
-.add_an_item{
-    width: 320px;
-    height:420px;
-    position: absolute;
-    box-sizing: border-box;
-    padding: 70px 30px;
-    left: 40%;
-    border: 1px solid black;
-    color:#000;
-    background:paleturquoise;
+tr{
+    color: #fff;
 }
-.order{
-    width: 320px;
-    height:350px;
-    margin-left: 40%;
-    margin-right: 50%;
-    padding: 70px 30px;
-    border: 1px solid black;
-    color:#000;
-    background:paleturquoise;
-}
-.orderp{
-    text-align: center;
-    font-size: 22px;
-    font-family: sans-serif;
-    padding: 10px;
-}*/
+
+
+
