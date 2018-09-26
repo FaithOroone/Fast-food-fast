@@ -35,3 +35,6 @@ class Testing(TestCase):
         response = self.app.put(
             '/api/v1/orders/2', data=json.dumps(self.order_data), content_type='application/json')
         self.assertEquals(response.status_code, 200)
+
+    
+

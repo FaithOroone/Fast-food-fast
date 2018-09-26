@@ -1,9 +1,11 @@
-/order/__pycache__/
+/api/__pycache__/
 .pytest_cache
 myprojectenv
 .cache/
 api/.vscode/
 /myprojectenv/
-order/__init__.pyc
+api/__init__.pyc
 ../../.vscode/
 .vscode/
+api/models.pyc
+api/views.pyc
