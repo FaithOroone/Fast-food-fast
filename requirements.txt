@@ -40,5 +40,5 @@ six==1.11.0
 version==0.1.1
 virtualenv==16.0.0
 Werkzeug==0.14.1
-wicd==1.7.4
+#wicd==1.7.4
 wrapt==1.10.11
