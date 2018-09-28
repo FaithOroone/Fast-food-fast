@@ -1,30 +1,35 @@
 class Order():
 
-    def __init__(self, orderId, location, contact, quantity, payment_mode, status):
+    def __init__(self, orderId, contact, quantity, status):
         self.orderId = orderId
-        self.location = location
         self.contact = contact
         self.quantity = quantity
-        self.payment_mode = payment_mode
         self.status = status
 
     def create_order(self):
         order = {"orderId": 1, "quantity": self.quantity, "contact": self.contact,
-                 "payment_mode": self.payment_mode, "status": self.status}
+                 "status": self.status}
         return order
 
 
 class OrderList():
-    # {'orderId': 1, 'quantity': 5, 'contact': 'faith@gmail.com','payment_mode':'C.O.D'},{'orderId': 2, 'quantity': 5, 'contact': 'faith1@gmail.com','payment_mode':'C.O.D'}
     def __init__(self):
         self.orderlist = []
-# get all orders endpoint.
 
+# get all orders endpoint.
     def get_orders(self):
         return self.orderlist
 
 # add an order endpoint
-    def add_order(self, orderId, location, contact, quantity, payment_mode, status):
+    def add_order(self, orderId, contact, quantity, status):
+        if not orderId == type(int):
+            raise ValueError('orderId must be an Integer.')
+        if not quantity == type(int):
+            raise ValueError('quantity must be an Integer.')
+        if not contact == type(int) or len(contact) == 10:
+            raise ValueError('contact must be an Integer of 10 digits.')
+        if not status == type(str):
+            raise ValueError('status must be a string.')
         order = Order(orderId, location, contact, quantity,
                       payment_mode, status).create_order()
         self.orderlist.append(order)
@@ -42,4 +47,3 @@ class OrderList():
             if order['orderId'] == orderId:
                 order['status'] = status
                 return order
-        return True

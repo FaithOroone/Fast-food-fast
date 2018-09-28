@@ -2,12 +2,11 @@ from flask import Flask, request, json, jsonify
 from models import Order, OrderList
 
 app = Flask(__name__)
-#order = Order()
 lst = OrderList()
 
-# add an order endpoint
 app = Flask(__name__)
 
+# add an order endpoint
 @app.route('/')
 def index():
     return "Welcome to Fast-food-fast"
@@ -15,8 +14,6 @@ def index():
 
 @app.route('/api/v1/orders', methods=['POST'])
 def add_an_order():
-    if not quantity == type(int):
-        
     if request.get_json():
         new_order_data = request.get_json()
         lst.orderlist.append(new_order_data)
@@ -38,6 +35,6 @@ def get_an_order(orderId):
 @app.route('/api/v1/orders/<int:orderId>', methods=['PUT'])
 def update_an_order(orderId):
     if request.get_json():
-        data = request.get_json()
-        return jsonify({'updated': lst.update_an_order(orderId, data['status'])})
+        new_order_data = request.get_json()
+        return jsonify({'updated': lst.update_an_order(orderId, new_order_data['status'])})
 
