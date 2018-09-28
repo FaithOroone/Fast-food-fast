@@ -8,7 +8,7 @@ lst = OrderList()
 # add an order endpoint
 app = Flask(__name__)
 
-@app.route('/api/v1/')
+@app.route('/')
 def index():
     return "Welcome to Fast-food-fast"
 
@@ -47,5 +47,3 @@ def update_an_order(orderId):
         return jsonify({'updated': lst.update_an_order(orderId, new_order_data['status'])})
 
 
-if __name__ == '__main__':
-    app.run(port=5000, debug=True)
