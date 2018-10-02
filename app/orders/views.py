@@ -1,6 +1,7 @@
-from flask import Flask
-from database import DatabaseConnection
+from flask import Flask, jsonify, request, make_response
+from app.models.database import DatabaseConnection
 
+db = DatabaseConnection()
 app = Flask(__name__)
 @app.route('/users/orders', methods=['POST'])
 def make_an_order():
@@ -28,7 +29,11 @@ def get_menu():
 
 @app.route('/menu', methods=['POST'])
 def add_a_menu():
-    return 'add an item in the menu'
+    data = request.get_json()
+    menu_item = data['menu_item']
+    price = data['price']
+    db.create_menu(menu_item, price)
+    return jsonify({'message':'Menu item added successfully'})
 
 if __name__ =='__main__':
     app.run(port=5000, debug=True)
