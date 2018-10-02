@@ -1,3 +1,4 @@
+
 # Fast-food-fast
 Fast-Food-Fast is a food delivery service app for a restaurant.
 
@@ -8,6 +9,7 @@ to create user accounts by signup up and then login to the account, place an ord
 
 ### Required Features(Endpoints)
 Endpoint Functionality.
+
 * POST /auth/signup Register a user
 * POST /auth/login  Login a user
 * POST /api/v2/users/orders Place an order for food.
@@ -24,17 +26,7 @@ Endpoint Functionality.
 
 ### Prerequisites
 Python/Flask framework
-* python
-
-### Setup/Installation Requirements
-* Install Python
-* Install pip
-* Setup a virtual environment
-* pip install Flask
-* pip install pytest
-* Run App Run python app.py on command prompt
-* View the api on http://127.0.0.1:5000/api/v1/api/order
-* Test it's usage with postman.
 
 ### License
 Copyright (c) 2018 Orone Faith Eunice
+
