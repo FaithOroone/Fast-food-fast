@@ -42,8 +42,19 @@ class DatabaseConnection:
 
     def create_order(self, user_id, menu_id, contact, quantity, order_status):
         query = "INSERT INTO orders(user_id, menu_id, contact, quantity, order_status)\
-        VALUES('{}','{}','{}','{}', '{}');".format(user_id, menu_id, contact, quantity,order_status)
+        VALUES('{}','{}','{}','{}', '{}');".format(user_id, menu_id, contact,
+        quantity,order_status)
         self.cursor.execute(query)
+
+    # #get a user
+    # def get_a_user(self, user_name):
+    #     query = "SELECT user_password FROM users WHERE user_name ='{}';".format(user_name)
+    #     self.cursor.execute(query)
+    #     user = self.cursor.fetchone()
+    #     if user:
+    #         return ""
+    #     for row in users:
+    #         print(row)
 
     #get all orders
     def get_all_orders(self):
@@ -85,11 +96,12 @@ class DatabaseConnection:
 
 
 DatabaseConnection().create_tables()
-DatabaseConnection().create_user('faith', 'faith@yahoo.com', '12345')
-DatabaseConnection().create_menu('pizza', '2000')
-DatabaseConnection().create_order(1, 1, 755490732, 5, 'pending')
-DatabaseConnection().get_all_orders()
-DatabaseConnection().get_an_order(1)
-DatabaseConnection().update_order_status('accepted', 1)
-DatabaseConnection().get_menu()
-DatabaseConnection().get_all_users()
+#DatabaseConnection().create_user('faith', 'faith@yahoo.com', '12345')
+#DatabaseConnection().create_menu('pizza', '2000')
+#DatabaseConnection().create_order(1, 1, 755490732, 5, 'pending')
+#DatabaseConnection().get_a_user('hd')
+#DatabaseConnection().get_all_orders()
+#DatabaseConnection().get_an_order(1)
+#DatabaseConnection().update_order_status('accepted', 1)
+#DatabaseConnection().get_menu()
+#DatabaseConnection().get_all_users()
