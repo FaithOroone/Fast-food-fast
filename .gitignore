@@ -1,4 +1,5 @@
-__pycache__
-.pytest_cache
-myprojectenv
-
+mydbproject/
+.vscode/
+app/auth/__init__.pyc/
+app/auth/views.pyc/
+app/models/__init__.pyc

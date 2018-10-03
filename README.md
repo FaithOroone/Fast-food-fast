@@ -1,26 +1,32 @@
-[![Build Status](https://travis-ci.org/FaithOroone/Fast-food-fast.svg?branch=develop)](https://travis-ci.org/FaithOroone/Fast-food-fast)
+
 # Fast-food-fast
 Fast-Food-Fast is a food delivery service app for a restaurant.
+
 ## Description
-Customers are able to view the menu online and make an order which is delivered at the customer's location with in 40 minutes.
-15/09/2018
+Fast-Food-Fast is a food delivery service app for a restaurant which enables users
+to create user accounts by signup up and then login to the account, place an order for food, get list of orders, get a specific order,update the status of an order, get the menu, add food option to the menu and view the order history  for a particular user.
+21/09/2018
 
-## Setup/Installation Requirements
-clone the Restaurant repo from github to your computer. open it in any text editor. run in any browser.
+### Required Features(Endpoints)
+Endpoint Functionality.
 
-## Known Bugs
-This website has no database so it may not store data entered into it.
+* POST /auth/signup Register a user
+* POST /auth/login  Login a user
+* POST /api/v2/users/orders Place an order for food.
+* GET /api/v2/users/orders Get the order history for a particular user.
+* GET /api/v2/orders Get a list of orders.
+* GET /api/v2/orders/<int:orderId> Fetch a specific order .
+* PUT /api/v2/orders/<int:orderId> update the order status.
+* GET /api/v2/menu  Get available menu.
+* POST /api/v2/menu Add a meal option to the menu.
 
 ## Technologies Used
-* HTML
-* CSS
-* javascript
+* postgresql database.
+* python
 
-## gh-pages
- https://faithoroone.github.io/Fast-food-fast/
+### Prerequisites
+Python/Flask framework
 
-## Support and contact details
-In case of any issues, questions, ideas or concerns. please email me on;faithorone59@gmail.com
+### License
+Copyright (c) 2018 Orone Faith Eunice
 
-## License
- Copyright (c) {year} Orone Faith Eunice
