@@ -61,8 +61,7 @@ class DatabaseConnection:
         query = "SELECT * FROM orders"
         self.cursor.execute(query)
         orders = self.cursor.fetchall()
-        for row in orders:
-            print(row)
+        return orders
 
     #get a signle order
     def get_an_order(self, order_id):
