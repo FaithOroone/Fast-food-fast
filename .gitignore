@@ -1,13 +1,5 @@
-ft-add_a_menu
-mydbproject
-/app/__pycache__/
-.cache/
-app/.vscode/
-app/__init__.pyc
-../../.vscode/
+mydbproject/
 .vscode/
-app/models.pyc
-app/views.pyc
-__pycache__
-run.pyc
- 
+app/auth/__init__.pyc/
+app/auth/views.pyc/
+app/models/__init__.pyc

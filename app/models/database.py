@@ -81,8 +81,8 @@ class DatabaseConnection:
         query = "SELECT * FROM menu"
         self.cursor.execute(query)
         menu = self.cursor.fetchall()
-        for row in menu:
-            print(row)
+        return menu
+
 
     #get all users
     def get_all_users(self):
@@ -103,5 +103,5 @@ DatabaseConnection().create_tables()
 #DatabaseConnection().get_all_orders()
 #DatabaseConnection().get_an_order(1)
 #DatabaseConnection().update_order_status('accepted', 1)
-#DatabaseConnection().get_menu()
+DatabaseConnection().get_menu()
 #DatabaseConnection().get_all_users()
