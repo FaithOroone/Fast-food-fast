@@ -47,15 +47,14 @@ class DatabaseConnection:
                                                    quantity, order_status)
         self.cursor.execute(query)
 
-    # #get a user
-    # def get_a_user(self, user_name):
-    #     query = "SELECT user_password FROM users WHERE user_name ='{}';".format(user_name)
-    #     self.cursor.execute(query)
-    #     user = self.cursor.fetchone()
-    #     if user:
-    #         return ""
-    #     for row in users:
-    #         print(row)
+    #get a user
+    def get_a_user(self, user_name):
+        query = "SELECT user_password FROM users WHERE user_name ='{}';".format(user_name)
+        self.cursor.execute(query)
+        user = self.cursor.fetchone()
+        print (user)
+        if user:
+            return user
 
     # get all orders
     def get_all_orders(self):
