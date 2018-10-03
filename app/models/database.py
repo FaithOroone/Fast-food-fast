@@ -27,7 +27,8 @@ class DatabaseConnection:
         self.cursor.execute(create_order)
 
     def create_user(self, user_name, email, user_password):
-        self.cursor.execute ("SELECT *FROM users WHERE user_name =%s", [user_name])
+        self.cursor.execute(
+            "SELECT *FROM users WHERE user_name =%s", [user_name])
         check_user = self.cursor.fetchone()
         if check_user:
             return "user_name already exists use another username"
@@ -43,7 +44,7 @@ class DatabaseConnection:
     def create_order(self, user_id, menu_id, contact, quantity, order_status):
         query = "INSERT INTO orders(user_id, menu_id, contact, quantity, order_status)\
         VALUES('{}','{}','{}','{}', '{}');".format(user_id, menu_id, contact,
-        quantity,order_status)
+                                                   quantity, order_status)
         self.cursor.execute(query)
 
     # #get a user
@@ -56,42 +57,42 @@ class DatabaseConnection:
     #     for row in users:
     #         print(row)
 
-    #get all orders
+    # get all orders
     def get_all_orders(self):
         query = "SELECT * FROM orders"
         self.cursor.execute(query)
         orders = self.cursor.fetchall()
-        for row in orders:
-            print(row)
+        return orders
 
-    #get a signle order
+    # get a signle order
     def get_an_order(self, order_id):
         query = "SELECT * FROM orders WHERE order_id = '{}';".format(order_id)
         self.cursor.execute(query)
         return self.cursor.fetchone()
 
-    #update order status
-    def update_order_status(self, order_id, order_status):
-        query = "UPDATE orders SET order_status='{}' WHERE order_id='{}';".format(order_id, order_status)
+    # update order status
+    def update_order_status(self, order_status, order_id):
+        query = "UPDATE orders SET order_status='{}' WHERE order_id='{}';".format(
+            order_status, order_id)
         self.cursor.execute(query)
         return "order_status Updated Succesfully"
 
-    #Get available menu
+    # Get available menu
     def get_menu(self):
         query = "SELECT * FROM menu"
         self.cursor.execute(query)
         menu = self.cursor.fetchall()
         return menu
 
-
-    #get all users
+    # get all users
     def get_all_users(self):
         query = "SELECT * FROM users"
         self.cursor.execute(query)
         rows = self.cursor.fetchall()
         users = []
         for row in rows:
-            print({'user_id': row[0], 'user_name': row[1], 'email': row[2], 'user_password': row[3]})
+            print({'user_id': row[0], 'user_name': row[1],
+                   'email': row[2], 'user_password': row[3]})
         return users
 
 
@@ -99,9 +100,9 @@ DatabaseConnection().create_tables()
 #DatabaseConnection().create_user('faith', 'faith@yahoo.com', '12345')
 #DatabaseConnection().create_menu('pizza', '2000')
 #DatabaseConnection().create_order(1, 1, 755490732, 5, 'pending')
-#DatabaseConnection().get_a_user('hd')
-#DatabaseConnection().get_all_orders()
-#DatabaseConnection().get_an_order(1)
+# DatabaseConnection().get_a_user('hd')
+# DatabaseConnection().get_all_orders()
+# DatabaseConnection().get_an_order(1)
 #DatabaseConnection().update_order_status('accepted', 1)
-DatabaseConnection().get_menu()
-#DatabaseConnection().get_all_users()
+# DatabaseConnection().get_menu()
+# DatabaseConnection().get_all_users()
