@@ -25,7 +25,8 @@ def update_an_order():
 
 @app.route('/menu', methods=['GET'])
 def get_menu():
-    return 'get the menu'
+    menu = db.get_menu()
+    return jsonify({'message': menu})
 
 @app.route('/menu', methods=['POST'])
 def add_a_menu():
