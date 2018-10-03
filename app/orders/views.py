@@ -19,14 +19,17 @@ def make_an_order():
     return jsonify({'message': 'Order created'}), 201
 
 
-
 @app.route('/users/orders', methods=['GET'])
 def get_order_history():
     return 'history of orders'
 
 
-@app.route('/orders/<orderId>', methods=['GET'])
-def get_an_order():
+@app.route('/orders/<order_id>', methods=['GET'])
+def get_an_order(order_id):
+    order = db.get_an_order(order_id)
+    if not order:
+        return jsonify({'message': 'No order placed by that id'}), 400
+    return jsonify({'message': order}), 200
     return 'one order'
 
 
@@ -43,8 +46,6 @@ def get_menu():
     if not menu:
         return jsonify({'message': 'No menu found'}), 400
     return jsonify({'message': menu}), 200
-
-
 
 @app.route('/menu', methods=['POST'])
 def add_a_menu():
