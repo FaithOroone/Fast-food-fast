@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, make_response
 from app.models.database import DatabaseConnection
 from werkzeug.security import generate_password_hash, check_password_hash
+from functools import wraps
 import jwt
 import datetime
 from app.orders.models import Users
@@ -9,8 +10,29 @@ db = DatabaseConnection()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'keren'
 
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+        if not token:
+            return jsonify({'message' : 'Token is missing!'}), 401
+        try:
+            data = jwt.decode(token, app.config['SECRET_KEY'])
+            db_user = db.get_a_user('user_name', data['user_name'])
+            current_user = Users(db_user[0], db_user[1], db_user[2],
+                            db_user[3], db_user[4])
+            current_user.is_admin = data['iadmin']
+        except:
+            return jsonify({'message':'Token is invalid'}), 401
+        return f(current_user, *args, **kwargs)
+    return decorated
+
+
 @app.route('/orders/<order_id>', methods=['PUT'])
-def update_an_order(order_id):
+@token_required
+def update_an_order(current_user, order_id,):
     data = request.get_json()
     order_status = data['order_status']
     db.update_order_status(order_status, order_id)
@@ -18,7 +40,8 @@ def update_an_order(order_id):
 
 
 @app.route('/orders/<order_id>', methods=['GET'])
-def get_an_order(order_id):
+@token_required
+def get_an_order(current_user, order_id):
     order = db.get_an_order(order_id)
     if not order:
         return jsonify({'message': 'No order placed by that id'}), 400
@@ -27,7 +50,8 @@ def get_an_order(order_id):
 
 
 @app.route('/orders', methods=['GET'])
-def get_orders():
+@token_required
+def get_orders(current_user):
     order = db.get_all_orders()
     if not order:
         return jsonify({'message': 'No order found'}), 400
@@ -35,7 +59,8 @@ def get_orders():
 
 
 @app.route('/users/orders', methods=['POST'])
-def make_an_order():
+@token_required
+def make_an_order(current_user):
     data = request.get_json()
     if not data:
         return jsonify({'Error': 'Please fill in the neccssary data'}), 400
@@ -48,7 +73,8 @@ def make_an_order():
     return jsonify({'message': 'Order created'}), 201
 
 @app.route('/menu', methods=['POST'])
-def add_a_menu():
+@token_required
+def add_a_menu(current_user):
     data = request.get_json()
     menu_item = data['menu_item']
     price = data['price']
@@ -57,7 +83,8 @@ def add_a_menu():
 
 
 @app.route('/menu', methods=['GET'])
-def get_menu():
+@token_required
+def get_menu(current_user):
     menu = db.get_menu()
     if not menu:
         return jsonify({'message': 'No menu found'}), 400

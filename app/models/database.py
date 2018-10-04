@@ -1,11 +1,22 @@
 import psycopg2
+import os
 
 
 class DatabaseConnection:
     def __init__(self):
         try:
+
+            postgresdb='fast_food_fast'
+            if os.getenv('APP_VAR')=='testing':
+                postgresdb='fast-food-fast-testing'
+            print(os.getenv('APP_VAR'))
+            print(postgresdb)
+
+
+
             self.connection = psycopg2.connect(
-                dbname='fast_food_fast', user='postgres', password='12345@kerenagemo', host='localhost', port='5432')
+                dbname=postgresdb, user='postgres', password='12345@kerenagemo', \
+                host='localhost', port='5432')
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
             print("connected!!")
@@ -40,7 +51,6 @@ class DatabaseConnection:
         query = "UPDATE users SET is_admin = True WHERE user_id = 1;"
         self.cursor.execute(query)
 
-
     def create_menu(self, menu_item, price):
         query = "INSERT INTO menu(menu_item, price)\
         VALUES('{}','{}');".format(menu_item, price)
@@ -52,7 +62,7 @@ class DatabaseConnection:
                                                    quantity, order_status)
         self.cursor.execute(query)
 
-    #get a user
+    # get a user
     def get_a_user(self, column, value):
         query = "SELECT * FROM users WHERE {} = '{}';".format(column, value)
         self.cursor.execute(query)
@@ -73,8 +83,8 @@ class DatabaseConnection:
         order = self.cursor.fetchone()
         return order
 
-
     # update order status
+
     def update_order_status(self, order_status, order_id):
         query = "UPDATE orders SET order_status='{}' WHERE order_id='{}';".format(
             order_status, order_id)
@@ -100,13 +110,5 @@ class DatabaseConnection:
         return users
 
 
-DatabaseConnection().create_tables()
-#DatabaseConnection().create_user('keren', 'keren@yahoo.com', 'dsds')
-#DatabaseConnection().create_menu('pizza', '2000')
-#DatabaseConnection().create_order(1, 1, 755490732, 5, 'pending')
-# DatabaseConnection().get_a_user('hd')
-# DatabaseConnection().get_all_orders()
-# DatabaseConnection().get_an_order(1)
-#DatabaseConnection().update_order_status('accepted', 1)
-# DatabaseConnection().get_menu()
-# DatabaseConnection().get_all_users()
+DatabaseConnection()
+# DatabaseConnection().auto_admin()
