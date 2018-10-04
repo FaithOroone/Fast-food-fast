@@ -47,19 +47,6 @@ def make_an_order():
     db.create_order(user_id, menu_id, contact, quantity, order_status)
     return jsonify({'message': 'Order created'}), 201
 
-    # if not contact == type(int):
-    #     return jsonify({'Error': 'Contact has to be an integer'}), 400
-    # if contact.strip() == '':
-    #     return jsonify({'Error': 'Contact can not be empty'}), 400
-    # if not len(contact) == 9:
-    #     return jsonify({'Error': 'Contact has 9 integers'}), 400
-
-    # if not quantity == type(int):
-    #     return jsonify({'Error': 'quantity has to be an integer'}), 400
-    # if quantity.strip() == '':
-    #     return jsonify({'Error': 'quantity can not be empty'}), 400
-
-
 @app.route('/menu', methods=['POST'])
 def add_a_menu():
     data = request.get_json()
@@ -67,13 +54,6 @@ def add_a_menu():
     price = data['price']
     db.create_menu(menu_item, price)
     return jsonify({'message': 'Menu item added successfully'}), 201
-    # if menu_item.strip() == '':
-    #     return jsonify({'Error': 'menu_item can not be empty'}), 400
-
-    # if price != type(int):
-    #     return jsonify({'Error': 'price has to be an integer'}), 400
-    # if price.strip() == '':
-    #     return jsonify({'Error': 'price can not be empty'}), 400
 
 
 @app.route('/menu', methods=['GET'])
