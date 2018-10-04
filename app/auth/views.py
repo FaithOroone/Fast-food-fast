@@ -29,7 +29,7 @@ def token_required(f):
         return f(current_user, *args, **kwargs)
     return decorated
 
-
+#update an order
 @app.route('/orders/<order_id>', methods=['PUT'])
 @token_required
 def update_an_order(current_user, order_id,):
@@ -38,7 +38,7 @@ def update_an_order(current_user, order_id,):
     db.update_order_status(order_status, order_id)
     return jsonify({'message': order_status}), 201
 
-
+#get order
 @app.route('/orders/<order_id>', methods=['GET'])
 @token_required
 def get_an_order(current_user, order_id):
@@ -48,7 +48,7 @@ def get_an_order(current_user, order_id):
     return jsonify({'message': order}), 200
     return order
 
-
+#get all orders
 @app.route('/orders', methods=['GET'])
 @token_required
 def get_orders(current_user):
@@ -57,7 +57,7 @@ def get_orders(current_user):
         return jsonify({'message': 'No order found'}), 400
     return jsonify({'message': order}), 200
 
-
+#make an order
 @app.route('/users/orders', methods=['POST'])
 @token_required
 def make_an_order(current_user):
@@ -69,19 +69,53 @@ def make_an_order(current_user):
     contact = data['contact']
     quantity = data['quantity']
     order_status = data['order_status']
+
+    if contact.strip() == '':
+        return jsonify({'Error': 'Contact can not be empty.'}),400
+
+    if  not contact.isnumeric():
+        return jsonify({"Error":"contact can not be a string!"}), 400
+
+    if quantity.strip() == '':
+        return jsonify({'Error': 'Quantity can not be empty.'}),400
+
+    if  not quantity.isnumeric():
+        return jsonify({"Error":"Quantity can not be a string!"}), 400
     db.create_order(user_id, menu_id, contact, quantity, order_status)
     return jsonify({'message': 'Order created'}), 201
 
+#add a menu
 @app.route('/menu', methods=['POST'])
 @token_required
 def add_a_menu(current_user):
     data = request.get_json()
+    if not data:
+        return jsonify({"Error":"Please fill in all the fields"}), 400
     menu_item = data['menu_item']
     price = data['price']
+
+    if menu_item.strip() == '':
+        return jsonify({'Error': 'menu_item can not be empty.'}),400
+
+    if not menu_item:
+        return jsonify({"Error":"menu_item is required."}), 400
+
+    if menu_item.isnumeric():
+        return jsonify({"Error":"menu_item can not be an integer!"}), 400
+
+    if price.strip() == '':
+        return jsonify({'Error': 'Price can not be empty.'}),400
+
+    if not price:
+        return jsonify({"Error":"Price is required."}), 400
+
+    if  not price.isnumeric():
+        return jsonify({"Error":"Price can not be a string!"}), 400
+
     db.create_menu(menu_item, price)
     return jsonify({'message': 'Menu item added successfully'}), 201
 
-
+#get menu
 @app.route('/menu', methods=['GET'])
 @token_required
 def get_menu(current_user):
@@ -90,38 +124,49 @@ def get_menu(current_user):
         return jsonify({'message': 'No menu found'}), 400
     return jsonify({'message': menu}), 200
 
-
+#create user
 @app.route('/auth/signup', methods=['POST'])
 def create_user():
     data = request.get_json()
-    user_name = data['user_name']
+    if not data:
+        return jsonify({'Error': 'Please enter all details to signup.'}),400
+    user_name = str(data['user_name'])
     email = data['email']
     user_password = generate_password_hash(data['user_password'])
 
-    if not data:
-        return jsonify({'Erorr': 'Please enter all details to signup'})
     if user_name.strip() == '':
-        return jsonify({'Erorr': 'username should not be empty'})
+        return jsonify({'Error': 'Username can not be empty.'}),400
+
+    if not user_name:
+        return jsonify({"Error":"Username is required."}), 400
+
+    if user_name.isnumeric():
+        return jsonify({"Error":"Username can not be an integer!"}), 400
 
     if len(user_name) < 3:
-        return jsonify({'Erorr': 'username is too short'})
+        return jsonify({'Error': 'Username is too short.'}),400
+
     if email.strip() == '':
-        return jsonify({'Erorr': 'email should not be empty'})
+        return jsonify({'Error': 'Email should not be empty'}), 400
+
     if user_password.strip() == '':
-        return jsonify({'Erorr': 'password can not be empty'})
-    if not type(user_password) == str:
-        return jsonify({'Erorr': 'password should be a string'})
-    if len(user_password) < 9:
-        return jsonify({'Erorr': 'password is too short'})
+        return jsonify({'Error': 'Password can not be empty'}), 400
+
+    if user_password.isnumeric():
+        return jsonify({"Error":"Password can not be an integer!"}), 400
+    if len(user_password) < 3:
+        return jsonify({'Error': 'Password is too short'}),400
 
     if db.create_user(user_name, email, user_password) == "username exists":
         return jsonify({'message': 'username exists'}), 400
     return jsonify({'message': 'User created'}), 201
 
-
+#login
 @app.route('/auth/login', methods=['POST'])
 def login():
     data = request.get_json()
+    if not data:
+        return({"message":"Please fill all the fields"})
     user_name = data['user_name']
     user_password = data['user_password']
     db_user = db.get_a_user('user_name', user_name)

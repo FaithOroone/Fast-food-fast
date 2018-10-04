@@ -26,7 +26,7 @@ class DatabaseConnection:
 
     def create_tables(self):
         create_user_table = "CREATE TABLE IF NOT EXISTS users\
-        (user_id serial primary key, user_name VARCHAR NOT NULL, email VARCHAR NOT NULL, user_password VARCHAR(99) NOT NULL, is_admin Boolean NOT NULL);"
+        (user_id serial primary key, user_name TEXT NOT NULL, email VARCHAR NOT NULL, user_password VARCHAR(99) NOT NULL, is_admin Boolean NOT NULL);"
         self.cursor.execute(create_user_table)
 
         create_menu = " CREATE TABLE IF NOT EXISTS menu\
@@ -66,21 +66,33 @@ class DatabaseConnection:
     def get_a_user(self, column, value):
         query = "SELECT * FROM users WHERE {} = '{}';".format(column, value)
         self.cursor.execute(query)
-        user = self.cursor.fetchone()
+        rows = self.cursor.fetchone()
+        user = []
+        for row in rows:
+            row = {'user_id':row[0],'user_name':row[1], 'email':row[2], 'user_password':row[3]}
+            user.append(row)
         return user
 
     # get all orders
     def get_all_orders(self):
         query = "SELECT * FROM orders"
         self.cursor.execute(query)
-        order = self.cursor.fetchall()
+        rows = self.cursor.fetchall()
+        order = []
+        for row in rows:
+            row = {'user_id':row[0],'menu_id':row[1], 'contact':row[2],'quantity':row[3], 'order_status':row[4]}
+            order.append(row)
         return order
 
     # get a signle order
     def get_an_order(self, order_id):
         query = "SELECT * FROM orders WHERE order_id = '{}';".format(order_id)
         self.cursor.execute(query)
-        order = self.cursor.fetchone()
+        rows = self.cursor.fetchone()
+        order = []
+        for row in rows:
+            row = {'user_id':row[0],'menu_id':row[1], 'contact':row[2],'quantity':row[3], 'order_status':row[4]}
+            order.append(row)
         return order
 
     # update order status
@@ -95,24 +107,17 @@ class DatabaseConnection:
     def get_menu(self):
         query = "SELECT * FROM menu"
         self.cursor.execute(query)
-        menu = self.cursor.fetchall()
-        return menu
-
-    # get all users
-    def get_all_users(self):
-        query = "SELECT * FROM users"
-        self.cursor.execute(query)
         rows = self.cursor.fetchall()
-        users = []
+        menu = []
         for row in rows:
-            print({'user_id': row[0], 'user_name': row[1],
-                   'email': row[2], 'user_password': row[3]})
-        return users
+            row = {'menu_id':row[0],'menu_item':row[1], 'price':row[2]}
+            menu.append(row)
+        return menu
+  
+    def drop_table(self):
+        query = "DROP TABLE users;DROP TABLE menu;DROP TABLE order;"
+        self.cursor.execute(query)
+        return "Droped"
 
-    # def drop_table(self):
-    #     	query = "DROP TABLE users;DROP TABLE menu;DROP TABLE order;"
-    #     self.cursor.execute(query)
-    #     return "Droped"
-
-DatabaseConnection()
-# DatabaseConnection().auto_admin()
+DatabaseConnection().create_tables()
+DatabaseConnection().auto_admin()
