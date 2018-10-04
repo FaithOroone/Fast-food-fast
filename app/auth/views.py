@@ -66,7 +66,7 @@ def add_a_menu():
     menu_item = data['menu_item']
     price = data['price']
     db.create_menu(menu_item, price)
-    # return jsonify({'message': 'Menu item added successfully'}), 201
+    return jsonify({'message': 'Menu item added successfully'}), 201
     # if menu_item.strip() == '':
     #     return jsonify({'Error': 'menu_item can not be empty'}), 400
 

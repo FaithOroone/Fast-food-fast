@@ -73,6 +73,7 @@ class DatabaseConnection:
         order = self.cursor.fetchone()
         return order
 
+
     # update order status
     def update_order_status(self, order_status, order_id):
         query = "UPDATE orders SET order_status='{}' WHERE order_id='{}';".format(
