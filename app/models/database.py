@@ -109,6 +109,10 @@ class DatabaseConnection:
                    'email': row[2], 'user_password': row[3]})
         return users
 
+    # def drop_table(self):
+    #     	query = "DROP TABLE users;DROP TABLE menu;DROP TABLE order;"
+    #     self.cursor.execute(query)
+    #     return "Droped"
 
 DatabaseConnection()
 # DatabaseConnection().auto_admin()
