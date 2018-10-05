@@ -8,6 +8,6 @@ services:
 before_script:
   - psql -c 'create database mydb;' -U postgres
 script:
-  - nose app/tests --cov=app/models --cov-report term-missing
+  - nose2 app/tests --cov=app/models --cov-report term-missing
 after_success:
   - coveralls
