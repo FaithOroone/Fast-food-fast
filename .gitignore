@@ -1,5 +1,9 @@
 mydbproject/
-.vscode/
+*__pycache__
+.vscode
+pylint
+.vscode/*
+app/auth/__pycache__
 app/auth/__init__.pyc/
 app/auth/views.pyc/
 app/models/__init__.pyc
@@ -10,9 +14,19 @@ app/models/__pycache__
 app/tests/__pycache__
 app/tests/__init__.pyc
 app/tests/.cache
-app/tests/.test_order.pyc
-app/tests/.text_user.pyc
-app/tests/.text_menu.pyc
+app/tests/__pycache__/*
+app/tests/__pycache__
+app/tests/.cache
+app/tests/__init__.pyc
+app/tests/test_order.pyc
+app/tests/test_menu.pyc
+app/tests/test_user.pyc
+app/__init__.pyc
+.cache
+app/__pycache__
+app/models/__pycache__/*
+
+
 
 
 
