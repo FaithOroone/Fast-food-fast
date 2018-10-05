@@ -23,14 +23,21 @@ def token_required(f):
             db_user = db.get_a_user('user_name', data['user_name'])
             current_user = Users(db_user[0], db_user[1], db_user[2],
                             db_user[3], db_user[4])
-            current_user.is_admin = data['iadmin']
+            current_user.is_admin = data['is_admin']
         except:
             return jsonify({'message':'Token is invalid'}), 401
         return f(current_user, *args, **kwargs)
     return decorated
 
+#get order_history
+@app.route('/users/orders/<int:user_id>', methods=['GET'])
+@token_required
+def get_order_history(current_user, user_id):
+    history = db.get_order_history(user_id)
+    return jsonify({'order_history' : history})
+
 #update an order
-@app.route('/orders/<order_id>', methods=['PUT'])
+@app.route('/orders/<int:order_id>', methods=['PUT'])
 @token_required
 def update_an_order(current_user, order_id,):
     data = request.get_json()
@@ -38,15 +45,14 @@ def update_an_order(current_user, order_id,):
     db.update_order_status(order_status, order_id)
     return jsonify({'message': order_status}), 201
 
-#get order
-@app.route('/orders/<order_id>', methods=['GET'])
+#get an order
+@app.route('/orders/<int:order_id>', methods=['GET'])
 @token_required
 def get_an_order(current_user, order_id):
-    order = db.get_an_order(order_id)
+    order = db.get_an_order('order_id', order_id)
     if not order:
         return jsonify({'message': 'No order placed by that id'}), 400
     return jsonify({'message': order}), 200
-    return order
 
 #get all orders
 @app.route('/orders', methods=['GET'])
@@ -70,17 +76,6 @@ def make_an_order(current_user):
     quantity = data['quantity']
     order_status = data['order_status']
 
-    if contact.strip() == '':
-        return jsonify({'Error': 'Contact can not be empty.'}),400
-
-    if  not contact.isnumeric():
-        return jsonify({"Error":"contact can not be a string!"}), 400
-
-    if quantity.strip() == '':
-        return jsonify({'Error': 'Quantity can not be empty.'}),400
-
-    if  not quantity.isnumeric():
-        return jsonify({"Error":"Quantity can not be a string!"}), 400
     db.create_order(user_id, menu_id, contact, quantity, order_status)
     return jsonify({'message': 'Order created'}), 201
 
@@ -103,14 +98,8 @@ def add_a_menu(current_user):
     if menu_item.isnumeric():
         return jsonify({"Error":"menu_item can not be an integer!"}), 400
 
-    if price.strip() == '':
-        return jsonify({'Error': 'Price can not be empty.'}),400
-
     if not price:
         return jsonify({"Error":"Price is required."}), 400
-
-    if  not price.isnumeric():
-        return jsonify({"Error":"Price can not be a string!"}), 400
 
     db.create_menu(menu_item, price)
     return jsonify({'message': 'Menu item added successfully'}), 201
@@ -152,14 +141,12 @@ def create_user():
     if user_password.strip() == '':
         return jsonify({'Error': 'Password can not be empty'}), 400
 
-    if user_password.isnumeric():
-        return jsonify({"Error":"Password can not be an integer!"}), 400
     if len(user_password) < 3:
         return jsonify({'Error': 'Password is too short'}),400
 
     if db.create_user(user_name, email, user_password) == "username exists":
-        return jsonify({'message': 'username exists'}), 400
-    return jsonify({'message': 'User created'}), 201
+        return jsonify({'message': 'username exists'}), 201
+    return jsonify({'message': 'you have successfully signed up'}), 201
 
 #login
 @app.route('/auth/login', methods=['POST'])
