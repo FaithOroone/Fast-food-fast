@@ -146,7 +146,7 @@ def create_user():
 
     if db.create_user(user_name, email, user_password) == "username exists":
         return jsonify({'message': 'username exists'}), 400
-    return jsonify({'message': 'you have successfully signed up'}), 200
+    return jsonify({'message': 'you have successfully signed up'}), 201
 
 #login
 @app.route('/auth/login', methods=['POST'])
@@ -168,4 +168,4 @@ def login():
                             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)},
                            app.config['SECRET_KEY'])
         return jsonify({'token': token.decode('UTF-8'), 'message': 'User logged-in'}), 200
-    return jsonify({'Error': 'Please check your details'})
+    return jsonify({'Error': 'Please check your details'}), 400
