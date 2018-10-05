@@ -15,8 +15,8 @@ class DatabaseConnection:
 
 
             self.connection = psycopg2.connect(
-                dbname=postgresdb, user='postgres', password='12345@kerenagemo', \
-                host='localhost', port='5432')
+                dbname='df9dd94m13r0sd', user='opdceyzerkijjs', password='d0f6de1a81591f70b184e446e3f97d130f981af08d94cb12c760c604bc048968',
+                host='ec2-54-243-147-162.compute-1.amazonaws.com', port='5432')
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
             print("connected!!")
