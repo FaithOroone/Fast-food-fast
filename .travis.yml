@@ -1,13 +1,15 @@
+
 language: python
 python:
-  - 3.6.6
+   "3.6.3"
 install:
-  - pip install -r requirements.txt
+  - "pip install -r requirements.txt"
+  - "pip install coverage"
+  - "pip install coveralls"
 services:
-  -postgresql
+  - postgresql
 before_script:
-  - psql -c 'create database mydb;' -U postgres
+  - psql -c 'create database test_db;' -U postgres
 script:
-  - nose2 app/tests --cov=app/models --cov-report term-missing
-after_success:
-  - coveralls
+    - nosetests --with-coverage --cover-package=app && coverage report
+after_success: coveralls

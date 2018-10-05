@@ -66,11 +66,7 @@ class DatabaseConnection:
     def get_a_user(self, column, value):
         query = "SELECT * FROM users WHERE {} = '{}';".format(column, value)
         self.cursor.execute(query)
-        rows = self.cursor.fetchone()
-        user = []
-        for row in rows:
-            row = {'user_id':row[0],'user_name':row[1], 'email':row[2], 'user_password':row[3]}
-            user.append(row)
+        user = self.cursor.fetchone()
         return user
 
     # get all orders
@@ -85,23 +81,25 @@ class DatabaseConnection:
         return order
 
     # get a signle order
-    def get_an_order(self, order_id):
-        query = "SELECT * FROM orders WHERE order_id = '{}';".format(order_id)
+    def get_an_order(self, column, value):
+        query = " SELECT * FROM orders WHERE {} = '{}';".format(column = value)
         self.cursor.execute(query)
-        rows = self.cursor.fetchone()
-        order = []
-        for row in rows:
-            row = {'user_id':row[0],'menu_id':row[1], 'contact':row[2],'quantity':row[3], 'order_status':row[4]}
-            order.append(row)
-        return order
+        user = self.cursor.fetchone()
+        return user
 
     # update order status
-
     def update_order_status(self, order_status, order_id):
         query = "UPDATE orders SET order_status='{}' WHERE order_id='{}';".format(
             order_status, order_id)
         self.cursor.execute(query)
         return order_status
+
+    #get order history.
+    def get_order_history(self, user_id):
+        query = "SELECT * FROM orders WHERE user_id = '{}';".format(user_id)
+        self.cursor.execute(query)
+        history = self.cursor.fetchall()
+        return history
 
     # Get available menu
     def get_menu(self):
@@ -113,11 +111,18 @@ class DatabaseConnection:
             row = {'menu_id':row[0],'menu_item':row[1], 'price':row[2]}
             menu.append(row)
         return menu
-  
+#"DROP TABLE orders; DROP TABLE menu
     def drop_table(self):
-        query = "DROP TABLE users;DROP TABLE menu;DROP TABLE order;"
+        query = "DROP TABLE users CASCADE;"
         self.cursor.execute(query)
         return "Droped"
 
+    #make an admin
+    def make_admin(self):
+        query = "UPDATE users SET is_admin = {} WHERE user_id = '{}';\
+        ".format(True, 1)
+        self.cursor.execute(query)
+
 DatabaseConnection().create_tables()
 DatabaseConnection().auto_admin()
+DatabaseConnection().make_admin()
