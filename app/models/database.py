@@ -1,11 +1,22 @@
 import psycopg2
+import os
 
 
 class DatabaseConnection:
     def __init__(self):
         try:
+
+            postgresdb='fast_food_fast'
+            if os.getenv('APP_VAR')=='testing':
+                postgresdb='fast-food-fast-testing'
+            print(os.getenv('APP_VAR'))
+            print(postgresdb)
+
+
+
             self.connection = psycopg2.connect(
-                dbname='fast_food_fast', user='postgres', password='12345@kerenagemo', host='localhost', port='5432')
+                dbname=postgresdb, user='postgres', password='12345@kerenagemo', \
+                host='localhost', port='5432')
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
             print("connected!!")
@@ -15,11 +26,11 @@ class DatabaseConnection:
 
     def create_tables(self):
         create_user_table = "CREATE TABLE IF NOT EXISTS users\
-        (user_id serial primary key, user_name VARCHAR NOT NULL, email VARCHAR NOT NULL, user_password VARCHAR(11) NOT NULL);"
+        (user_id serial primary key, user_name TEXT NOT NULL, email VARCHAR NOT NULL, user_password VARCHAR(99) NOT NULL, is_admin Boolean NOT NULL);"
         self.cursor.execute(create_user_table)
 
         create_menu = " CREATE TABLE IF NOT EXISTS menu\
-        (menu_id serial primary key, menu_item text NOT NULL, price integer NOT NULL);"
+        (menu_id serial primary key, menu_item text NOT NULL, price integer);"
         self.cursor.execute(create_menu)
 
         create_order = "CREATE TABLE IF NOT EXISTS orders\
@@ -31,9 +42,13 @@ class DatabaseConnection:
             "SELECT *FROM users WHERE user_name =%s", [user_name])
         check_user = self.cursor.fetchone()
         if check_user:
-            return "user_name already exists use another username"
-        query = "INSERT INTO users(user_name, email, user_password)\
-        VALUES('{}','{}','{}');".format(user_name, email, user_password)
+            return "username exists"
+        query = "INSERT INTO users(user_name, email, user_password, is_admin)\
+        VALUES('{}','{}','{}', False);".format(user_name, email, user_password)
+        self.cursor.execute(query)
+
+    def auto_admin(self):
+        query = "UPDATE users SET is_admin = True WHERE user_id = 1;"
         self.cursor.execute(query)
 
     def create_menu(self, menu_item, price):
@@ -47,61 +62,67 @@ class DatabaseConnection:
                                                    quantity, order_status)
         self.cursor.execute(query)
 
-    #get a user
-    def get_a_user(self, user_name):
-        query = "SELECT user_password FROM users WHERE user_name ='{}';".format(user_name)
+    # get a user
+    def get_a_user(self, column, value):
+        query = "SELECT * FROM users WHERE {} = '{}';".format(column, value)
         self.cursor.execute(query)
         user = self.cursor.fetchone()
-        print (user)
-        if user:
-            return user
+        return user
 
     # get all orders
     def get_all_orders(self):
         query = "SELECT * FROM orders"
         self.cursor.execute(query)
-        orders = self.cursor.fetchall()
-        return orders
+        rows = self.cursor.fetchall()
+        order = []
+        for row in rows:
+            row = {'user_id':row[0],'menu_id':row[1], 'contact':row[2],'quantity':row[3], 'order_status':row[4]}
+            order.append(row)
+        return order
 
     # get a signle order
-    def get_an_order(self, order_id):
-        query = "SELECT * FROM orders WHERE order_id = '{}';".format(order_id)
+    def get_an_order(self, column, value):
+        query = " SELECT * FROM orders WHERE {} = '{}';".format(column = value)
         self.cursor.execute(query)
-        return self.cursor.fetchone()
+        user = self.cursor.fetchone()
+        return user
 
     # update order status
     def update_order_status(self, order_status, order_id):
         query = "UPDATE orders SET order_status='{}' WHERE order_id='{}';".format(
             order_status, order_id)
         self.cursor.execute(query)
-        return "order_status Updated Succesfully"
+        return order_status
+
+    #get order history.
+    def get_order_history(self, user_id):
+        query = "SELECT * FROM orders WHERE user_id = '{}';".format(user_id)
+        self.cursor.execute(query)
+        history = self.cursor.fetchall()
+        return history
 
     # Get available menu
     def get_menu(self):
         query = "SELECT * FROM menu"
         self.cursor.execute(query)
-        menu = self.cursor.fetchall()
-        return menu
-
-    # get all users
-    def get_all_users(self):
-        query = "SELECT * FROM users"
-        self.cursor.execute(query)
         rows = self.cursor.fetchall()
-        users = []
+        menu = []
         for row in rows:
-            print({'user_id': row[0], 'user_name': row[1],
-                   'email': row[2], 'user_password': row[3]})
-        return users
+            row = {'menu_id':row[0],'menu_item':row[1], 'price':row[2]}
+            menu.append(row)
+        return menu
+#"DROP TABLE orders; DROP TABLE menu
+    def drop_table(self):
+        query = "DROP TABLE users CASCADE;"
+        self.cursor.execute(query)
+        return "Droped"
 
+    #make an admin
+    def make_admin(self):
+        query = "UPDATE users SET is_admin = {} WHERE user_id = '{}';\
+        ".format(True, 1)
+        self.cursor.execute(query)
 
 DatabaseConnection().create_tables()
-#DatabaseConnection().create_user('faith', 'faith@yahoo.com', '12345')
-#DatabaseConnection().create_menu('pizza', '2000')
-#DatabaseConnection().create_order(1, 1, 755490732, 5, 'pending')
-# DatabaseConnection().get_a_user('hd')
-# DatabaseConnection().get_all_orders()
-# DatabaseConnection().get_an_order(1)
-#DatabaseConnection().update_order_status('accepted', 1)
-# DatabaseConnection().get_menu()
-# DatabaseConnection().get_all_users()
+DatabaseConnection().auto_admin()
+DatabaseConnection().make_admin()
