@@ -10,7 +10,7 @@ services:
   - postgresql
 before_script:
   - psql -c 'create database fast_food_fast_testing;' -U postgres
+  - export APP_VAR=testing
 script:
-    - nosetests --with-coverage --cover-package=app && coverage report
-    - export APP_VAR="fast-food-fast-testing"
+  - nosetests --with-coverage --cover-package=app && coverage report
 after_success: coveralls
