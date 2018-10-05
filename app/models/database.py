@@ -8,7 +8,7 @@ class DatabaseConnection:
 
             postgresdb = 'fast_food_fast'
             if os.getenv('APP_VAR') == 'testing':
-                postgresdb = 'fast-food-fast-testing'
+                postgresdb = 'fast_food_fast_testing'
             print(os.getenv('APP_VAR'))
             print(postgresdb)
 

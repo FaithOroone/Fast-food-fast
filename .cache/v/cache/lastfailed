@@ -1,6 +1,0 @@
-{
-  "app/tests/test_user.py": true, 
-  "tests/test_menu.py": true, 
-  "tests/test_order.py": true, 
-  "tests/test_user.py": true
-}
