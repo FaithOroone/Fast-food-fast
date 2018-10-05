@@ -145,8 +145,8 @@ def create_user():
         return jsonify({'Error': 'Password is too short'}),400
 
     if db.create_user(user_name, email, user_password) == "username exists":
-        return jsonify({'message': 'username exists'}), 201
-    return jsonify({'message': 'you have successfully signed up'}), 201
+        return jsonify({'message': 'username exists'}), 400
+    return jsonify({'message': 'you have successfully signed up'}), 200
 
 #login
 @app.route('/auth/login', methods=['POST'])
