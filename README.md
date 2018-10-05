@@ -1,4 +1,4 @@
-
+[![Build Status](https://travis-ci.org/FaithOroone/Fast-food-fast.svg?branch=develop)](https://travis-ci.org/FaithOroone/Fast-food-fast)
 # Fast-food-fast
 Fast-Food-Fast is a food delivery service app for a restaurant.
 
