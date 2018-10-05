@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/FaithOroone/Fast-food-fast.svg?branch=develop)](https://travis-ci.org/FaithOroone/Fast-food-fast) [![Maintainability](https://api.codeclimate.com/v1/badges/cebadc11188adbfb2708/maintainability)](https://codeclimate.com/github/FaithOroone/Fast-food-fast/maintainability) [![Coverage Status](https://coveralls.io/repos/github/FaithOroone/Fast-food-fast/badge.svg?branch=develop-api)](https://coveralls.io/github/FaithOroone/Fast-food-fast?branch=develop-api)
+[![Build Status](https://travis-ci.org/FaithOroone/Fast-food-fast.svg?branch=develop-api)](https://travis-ci.org/FaithOroone/Fast-food-fast)  [![Maintainability](https://api.codeclimate.com/v1/badges/cebadc11188adbfb2708/maintainability)](https://codeclimate.com/github/FaithOroone/Fast-food-fast/maintainability) [![Coverage Status](https://coveralls.io/repos/github/FaithOroone/Fast-food-fast/badge.svg?branch=develop-api)](https://coveralls.io/github/FaithOroone/Fast-food-fast?branch=develop-api)
+
 # Fast-food-fast
 Fast-Food-Fast is a food delivery service app for a restaurant.
 

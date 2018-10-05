@@ -113,7 +113,7 @@ class DatabaseConnection:
 # "DROP TABLE orders; DROP TABLE menu
 
     def drop_table(self):
-        query = "DROP TABLE IF EXISTS users CASCADE;"
+        query = "DROP TABLE IF EXISTS users CASCADE; DROP TABLE IF EXIST menu CASCADE; DROP TABLE IF EXIST orders;"
         self.cursor.execute(query)
         return "Droped"
 
