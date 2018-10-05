@@ -6,16 +6,14 @@ class DatabaseConnection:
     def __init__(self):
         try:
 
-            postgresdb='fast_food_fast'
-            if os.getenv('APP_VAR')=='testing':
-                postgresdb='fast-food-fast-testing'
+            postgresdb = 'fast_food_fast'
+            if os.getenv('APP_VAR') == 'testing':
+                postgresdb = 'fast-food-fast-testing'
             print(os.getenv('APP_VAR'))
             print(postgresdb)
 
-
-
             self.connection = psycopg2.connect(
-                dbname=postgresdb, user='postgres', password='12345@kerenagemo', \
+                dbname=postgresdb, user='postgres', password='12345@kerenagemo',
                 host='localhost', port='5432')
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
@@ -69,20 +67,21 @@ class DatabaseConnection:
         user = self.cursor.fetchone()
         return user
 
-    # get all orders
     def get_all_orders(self):
+        """get all orders."""
         query = "SELECT * FROM orders"
         self.cursor.execute(query)
         rows = self.cursor.fetchall()
         order = []
         for row in rows:
-            row = {'user_id':row[0],'menu_id':row[1], 'contact':row[2],'quantity':row[3], 'order_status':row[4]}
+            row = {'user_id': row[0], 'menu_id': row[1], 'contact': row[2],
+                   'quantity': row[3], 'order_status': row[4]}
             order.append(row)
         return order
 
     # get a signle order
     def get_an_order(self, column, value):
-        query = " SELECT * FROM orders WHERE {} = '{}';".format(column = value)
+        query = " SELECT * FROM orders WHERE {} = '{}';".format(column, value)
         self.cursor.execute(query)
         user = self.cursor.fetchone()
         return user
@@ -94,7 +93,7 @@ class DatabaseConnection:
         self.cursor.execute(query)
         return order_status
 
-    #get order history.
+    # get order history.
     def get_order_history(self, user_id):
         query = "SELECT * FROM orders WHERE user_id = '{}';".format(user_id)
         self.cursor.execute(query)
@@ -108,20 +107,22 @@ class DatabaseConnection:
         rows = self.cursor.fetchall()
         menu = []
         for row in rows:
-            row = {'menu_id':row[0],'menu_item':row[1], 'price':row[2]}
+            row = {'menu_id': row[0], 'menu_item': row[1], 'price': row[2]}
             menu.append(row)
         return menu
-#"DROP TABLE orders; DROP TABLE menu
+# "DROP TABLE orders; DROP TABLE menu
+
     def drop_table(self):
-        query = "DROP TABLE users CASCADE;"
+        query = "DROP TABLE IF EXISTS users CASCADE;"
         self.cursor.execute(query)
         return "Droped"
 
-    #make an admin
+    # make an admin
     def make_admin(self):
         query = "UPDATE users SET is_admin = {} WHERE user_id = '{}';\
         ".format(True, 1)
         self.cursor.execute(query)
+
 
 DatabaseConnection().create_tables()
 DatabaseConnection().auto_admin()
