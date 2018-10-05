@@ -5,3 +5,15 @@ app/auth/views.pyc/
 app/models/__init__.pyc
 app/models/__init__.pyc
 app/models/database.pyc
+app/auth/__pycache__
+app/models/__pycache__
+app/tests/__pycache__
+app/tests/__init__.pyc
+app/tests/.cache
+app/tests/.test_order.pyc
+app/tests/.text_user.pyc
+app/tests/.text_menu.pyc
+
+
+
+

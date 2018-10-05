@@ -159,7 +159,7 @@ def create_user():
 
     if db.create_user(user_name, email, user_password) == "username exists":
         return jsonify({'message': 'username exists'}), 400
-    return jsonify({'message': 'User created'}), 201
+    return jsonify({'message': 'you have successfully loged in'}), 201
 
 #login
 @app.route('/auth/login', methods=['POST'])
