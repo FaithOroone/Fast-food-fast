@@ -15,3 +15,4 @@ class Testsignup(BaseTest):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.data)['message'], 'User logged-in')
 
+    
