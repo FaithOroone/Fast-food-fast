@@ -168,4 +168,4 @@ def login():
                             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)},
                            app.config['SECRET_KEY'])
         return jsonify({'token': token.decode('UTF-8'), 'message': 'User logged-in'}), 200
-    return jsonify({'Error': 'Please check your details'}), 400
+    return jsonify({'Error': 'wrong password'}), 400

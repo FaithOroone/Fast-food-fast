@@ -8,7 +8,7 @@ class DatabaseConnection:
 
             postgresdb = 'fast_food_fast'
             if os.getenv('APP_VAR') == 'testing':
-                postgresdb = 'fast_food_fast_testing'
+                postgresdb = 'fast-food-fast-testing'
             print(os.getenv('APP_VAR'))
             print(postgresdb)
 
@@ -113,9 +113,21 @@ class DatabaseConnection:
 # "DROP TABLE orders; DROP TABLE menu
 
     def drop_table(self):
-        query = "DROP TABLE IF EXISTS users CASCADE;"
+        query = "DROP TABLE IF EXISTS users CASCADE; DROP TABLE IF EXISTS menu CASCADE;"
+        # DROP TABLE IF EXISTS orders;"
         self.cursor.execute(query)
         return "Droped"
+
+
+    # def drop_tablemenu(self):
+    #     query = "DROP TABLE IF EXISTS menu CASCADE;"
+    #     self.cursor.execute(query)
+    #     return "Droped"
+
+    # def drop_tableorder(self):
+    #     query = "DROP TABLE IF EXISTS orders CASCADE;"
+    #     self.cursor.execute(query)
+    #     return "Droped"
 
     # make an admin
     def make_admin(self):
